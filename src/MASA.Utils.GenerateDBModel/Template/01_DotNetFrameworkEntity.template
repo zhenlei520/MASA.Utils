@@ -1,0 +1,30 @@
+﻿//------------------------------------------------------------------------------
+// <auto-codeCreate>
+//     此代码由工具生成。
+//     对此文件的更改可能会导致不正确的行为，
+//     如果重新生成代码，这些更改将会丢失。
+// </auto-codeCreate>
+//------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+[EnumNamespace]
+
+namespace [NamespaceName]
+{
+    /// <summary>
+    /// Copyright (c) 杭州数闪科技有限公司
+    /// 日 期：[CreateTime]
+    /// 描 述：[TableComment]
+    /// </summary>
+    [TableName]
+    public partial class [EntityClassName]:BaseEntity
+    {
+[Fiels]
+    }
+}

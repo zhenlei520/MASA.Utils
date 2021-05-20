@@ -1,0 +1,54 @@
+﻿//------------------------------------------------------------------------------
+// <auto-codeCreate>
+//     此代码由工具生成。
+//     对此文件的更改可能会导致不正确的行为，
+//     如果重新生成代码，这些更改将会丢失。
+// </auto-codeCreate>
+//------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace [NamespaceName]
+{
+    public class BaseEntity
+    {
+        /// <summary>
+        /// Id
+        /// </summary>
+        [Column("Id")]
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// IsDeleted
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// CreateTime
+        /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// CreateUserId
+        /// </summary>
+        public Guid CreateUserId { get; set; }
+
+        /// <summary>
+        /// UpdateTime
+        /// </summary>
+        public DateTime UpdateTime { get; set; }
+
+        /// <summary>
+        /// UpdateUserId
+        /// </summary>
+        public Guid UpdateUserId { get; set; }
+    }
+}
