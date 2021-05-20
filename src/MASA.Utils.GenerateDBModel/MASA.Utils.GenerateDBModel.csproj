@@ -23,7 +23,7 @@
     <None Update="Resources\fav.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="Template\00_BaseEntity.template">
+    <None Update="Template\00_EntityBase.template">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Template\01_DotNetFrameworkEntity.template">

@@ -16,14 +16,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace [NamespaceName]
 {
-    public class BaseEntity
+    public class EntityBase<TKey>
     {
         /// <summary>
         /// Id
         /// </summary>
         [Column("Id")]
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public TKey Id { get; set; }
 
         /// <summary>
         /// IsDeleted
@@ -34,7 +34,7 @@ namespace [NamespaceName]
         /// CreateTime
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreateTime { get; set; }
+        public DateTime CreateTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// CreateUserId
@@ -44,7 +44,7 @@ namespace [NamespaceName]
         /// <summary>
         /// UpdateTime
         /// </summary>
-        public DateTime UpdateTime { get; set; }
+        public DateTime UpdateTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// UpdateUserId

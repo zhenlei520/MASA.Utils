@@ -15,6 +15,7 @@ namespace MASA.Utils.GenerateDBModel
     public class CreateModel
     {
         #region 属性和字段
+
         /// <summary>
         /// 命名空间名
         /// </summary>
@@ -64,7 +65,8 @@ namespace MASA.Utils.GenerateDBModel
         /// </summary>
         protected string Year { get; set; }
 
-        protected string BaseEntityName { get; set; } = "BaseEntity";
+        protected string BaseEntityName { get; set; } = "EntityBase";
+
         #endregion
 
         /// <summary>
@@ -131,7 +133,7 @@ FROM
             string templateDir = Path.Combine(Environment.CurrentDirectory, "Template");
             string codeStr = File.ReadAllText(Path.Combine(templateDir, TemplateName + ".template"));
 
-            string baseEntityStr = File.ReadAllText(Path.Combine(templateDir, "00_BaseEntity.template"));
+            string baseEntityStr = File.ReadAllText(Path.Combine(templateDir, "00_EntityBase.template"));
 
             // 组合字段
             string fieldStr = @"
@@ -143,6 +145,7 @@ FROM
 ";
             List<string> fieldStrs = new();
             List<string> PRIStrs = new();
+            string TKey = null;
 
             Assembly asm = Assembly.LoadFile(EnumAssemblyFullName);
             string enumNamespace = null;
@@ -151,33 +154,21 @@ FROM
             {
                 string dataType = GetDataType(item);
                 string columnName = ToTitleCase(item.ColumnName);
+
                 #region 主键处理
-                //        if (item.ColumnKey == "PRI")
-                //        {
-                //            PRIStrs.Add(string.Format("t.{0}", columnName));
 
-                //            //Guid的处理
-                //            if (item.ColumnType == "char(36)" || item.DataType == "uniqueidentifier")
-                //            {
-                //                fieldStrs.Add(fieldStr.Replace("[ColumnComment]", item.ColumnComment)
-                //                    .Replace("[ColumnName]", @"[Column(""" + item.ColumnName + @""")]
-                //[Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]")
-                //                    .Replace("[DataType]", dataType)
-                //                    .Replace("[FieldName]", columnName));
-                //                continue;
-                //            }
+                if (item.ColumnKey == "PRI")
+                {
+                    PRIStrs.Add(string.Format("t.{0}", columnName));
 
-                //            // 主键自增的特殊处理
-                //            if (!item.Extra.Contains("auto_increment"))
-                //            {
-                //                fieldStrs.Add(fieldStr.Replace("[ColumnComment]", item.ColumnComment)
-                //                    .Replace("[ColumnName]", @"[Column(""" + item.ColumnName + @""")]
-                //[Key,DatabaseGenerated(DatabaseGeneratedOption.None)]")
-                //                    .Replace("[DataType]", dataType)
-                //                    .Replace("[FieldName]", columnName));
-                //                continue;
-                //            }
-                //        }
+                    //Guid的处理
+                    if (item.ColumnType == "char(36)" || item.DataType == "uniqueidentifier")
+                        TKey = "Guid";
+                    else
+                        TKey = item.DataType;
+
+                }
+
                 #endregion
 
                 //通用字段过滤
@@ -218,13 +209,14 @@ FROM
             // 实体类文件字段替换
             string entityClassName = ToTitleCase(table.TableName);
             string entityCode = codeStr.Replace("[NamespaceName]", this.NamespaceName)
-                .Replace("[EnumNamespace]", string.IsNullOrEmpty(enumNamespace) ? null : $"using {enumNamespace};")
-                .Replace("[TableName]", $"[Table(\"{table.TableName}\")]")
-                .Replace("[CreateTime]", CurrentTime)
-                .Replace("[TableComment]", table.TableComment)
-                .Replace("[EntityClassName]", entityClassName)
-                .Replace("[Fiels]", string.Join("", fieldStrs))
-                .Replace("[Year]", Year);
+            .Replace("[TKey]", TKey)
+            .Replace("[EnumNamespace]", string.IsNullOrEmpty(enumNamespace) ? null : $"using {enumNamespace};")
+            .Replace("[TableName]", $"[Table(\"{table.TableName}\")]")
+            .Replace("[CreateTime]", CurrentTime)
+            .Replace("[TableComment]", table.TableComment)
+            .Replace("[EntityClassName]", entityClassName)
+            .Replace("[Fiels]", string.Join("", fieldStrs))
+            .Replace("[Year]", Year);
             fileAllPath = Path.Combine(_filePath, entityClassName + ".cs");
             File.WriteAllText(fileAllPath, entityCode);
 

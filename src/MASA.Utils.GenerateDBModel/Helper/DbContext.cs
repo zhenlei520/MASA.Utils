@@ -7,8 +7,8 @@ namespace MASA.Utils.GenerateDBModel.Helper
 {
     public static class DbContext
     {
+        private static IDbConnection Db;
 
-        // 获取开启数据库的连接
         public static IDbConnection GetDbConnection(string connStr)
         {
             DapperHelper.GetInstance(connStr);
@@ -16,14 +16,7 @@ namespace MASA.Utils.GenerateDBModel.Helper
             return Db;
         }
 
-        private static IDbConnection Db;
 
-        /// <summary>
-        /// 查出一条记录的实体
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sql"></param>
-        /// <returns></returns>
         public static T QueryFirstOrDefault<T>(string sql, object param = null)
         {
             return Db.QueryFirstOrDefault<T>(sql, param);
@@ -33,11 +26,7 @@ namespace MASA.Utils.GenerateDBModel.Helper
         {
             return Db.QueryFirstOrDefaultAsync<T>(sql, param);
         }
-        /// <summary>
-        /// 查出多条记录的实体泛型集合
-        /// </summary>
-        /// <typeparam name="T">泛型T</typeparam>
-        /// <returns></returns>
+
         public static IEnumerable<T> Query<T>(string sql, object param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
         {
             return Db.Query<T>(sql, param, transaction, buffered, commandTimeout, commandType);
@@ -68,12 +57,6 @@ namespace MASA.Utils.GenerateDBModel.Helper
             return Db.ExecuteScalarAsync<T>(sql, param, transaction, commandTimeout, commandType);
         }
 
-        /// <summary>
-        /// 同时查询多张表数据（高级查询）
-        /// "select *from K_City;select *from K_Area";
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
         public static SqlMapper.GridReader QueryMultiple(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null)
         {
             return Db.QueryMultiple(sql, param, transaction, commandTimeout, commandType);
