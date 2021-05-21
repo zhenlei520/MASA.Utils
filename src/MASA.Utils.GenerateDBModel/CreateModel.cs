@@ -166,7 +166,6 @@ FROM
                         TKey = "Guid";
                     else
                         TKey = item.DataType;
-
                 }
 
                 #endregion
@@ -201,7 +200,7 @@ FROM
                     .Replace("[FieldName]", columnName));
             }
 
-            //生成BaseEntity
+            //生成EntityBase
             string baseEntityCode = baseEntityStr.Replace("[NamespaceName]", this.NamespaceName);
             string fileAllPath = Path.Combine(_filePath, $"{BaseEntityName}.cs");
             File.WriteAllText(fileAllPath, baseEntityCode);
