@@ -66,7 +66,7 @@ namespace MASA.Utils.GenerateDBModel
         /// </summary>
         protected string Year { get; set; }
 
-        protected string BaseEntityName { get; set; } = "EntityBase";
+        protected string EntityBaseName { get; set; } = "EntityBase";
 
         #endregion
 
@@ -204,7 +204,7 @@ FROM
 
             //生成EntityBase
             string baseEntityCode = baseEntityStr.Replace("[NamespaceName]", this.NamespaceName);
-            string fileAllPath = Path.Combine(_filePath, $"{BaseEntityName}.cs");
+            string fileAllPath = Path.Combine(_filePath, $"{EntityBaseName}.cs");
             File.WriteAllText(fileAllPath, baseEntityCode);
 
             // 实体类文件字段替换
