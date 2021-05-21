@@ -271,7 +271,7 @@ namespace MASA.Utils.GenerateDBModel
                         if (node.IsChecked)
                             nodeNames.Add(node.DeptName);
                     }
-                    createModel.CreateModeBySchemaName(nodeNames, item.DeptName);
+                    createModel.CreateEntitiesBySchemaName(nodeNames, item.DeptName);
                 }
             }
 

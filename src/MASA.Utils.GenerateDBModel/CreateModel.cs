@@ -93,7 +93,7 @@ namespace MASA.Utils.GenerateDBModel
         /// <summary>
         /// 根据数据库名生成实体类
         /// </summary>
-        public void CreateModeBySchemaName(List<string> tableName, string schemaName)
+        public void CreateEntitiesBySchemaName(List<string> tableName, string schemaName)
         {
             string strSQL = "SELECT TABLE_NAME as TableName,TABLE_COMMENT as TableComment FROM `TABLES` WHERE `TABLE_SCHEMA` = @schemaName";
             var args = new { schemaName };
@@ -352,10 +352,10 @@ FROM
             for (int i = 0; i < strs.Length; i++)
             {
                 string str = strs[i];
-                int str_length = str.Length;
-                if (str_length > 1)
+                int strLength = str.Length;
+                if (strLength > 1)
                 {
-                    toStr += (str.Substring(0, 1).ToUpper() + str.Substring(1, str_length - 1));
+                    toStr += (str.Substring(0, 1).ToUpper() + str.Substring(1, strLength - 1));
                 }
                 else
                     toStr += str.ToUpper();
