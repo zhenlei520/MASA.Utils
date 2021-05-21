@@ -14,7 +14,7 @@
                     <ColumnDefinition Width="240*"/>
                 </Grid.ColumnDefinitions>
                 <Label x:Name="serverSettings" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.461,-2.511" Content="服务器配置：" Margin="25,22,0,0" Grid.ColumnSpan="2" />
-                <ComboBox x:Name="serverSettingsComboBox" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="443" Text="lsd@123" Margin="18,22,0,0" Grid.Column="1" SelectionChanged="serverSettingsComboBox_SelectionChanged"/>
+                <ComboBox x:Name="serverSettingsComboBox" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="443" Text="lsd@123" Margin="18,22,0,0" Grid.Column="1" SelectionChanged="ServerSettingsComboBox_SelectionChanged"/>
                 <Label x:Name="dbLable" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.461,-2.511" Content="数据库服务器：" Margin="11,63,0,0" Grid.ColumnSpan="2" />
                 <TextBox x:Name="dbText" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="443" Margin="18,65,0,0" Grid.Column="1" />
                 <Label x:Name="lblPort" RenderTransformOrigin="-2.891,2.81" VerticalAlignment="Top" HorizontalAlignment="Left" Content="数据库端口：" Margin="25,109,0,0" Grid.ColumnSpan="2"/>

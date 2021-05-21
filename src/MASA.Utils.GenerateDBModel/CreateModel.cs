@@ -2,6 +2,7 @@
 using MASA.Utils.GenerateDBModel.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,12 +17,12 @@ namespace MASA.Utils.GenerateDBModel
     {
         #region 属性和字段
 
+        protected string _filePath;
+
         /// <summary>
         /// 命名空间名
         /// </summary>
         protected string NamespaceName { get; set; }
-
-        protected string _filePath;
 
         /// <summary>
         /// 生成文件路径
@@ -96,6 +97,7 @@ namespace MASA.Utils.GenerateDBModel
         {
             string strSQL = "SELECT TABLE_NAME as TableName,TABLE_COMMENT as TableComment FROM `TABLES` WHERE `TABLE_SCHEMA` = @schemaName";
             var args = new { schemaName };
+
             List<DataBaseTableEntity> tables = DbContext.Query<DataBaseTableEntity>(strSQL, args).ToList();
 
             strSQL = @"
@@ -214,7 +216,7 @@ FROM
             .Replace("[CreateTime]", CurrentTime)
             .Replace("[TableComment]", table.TableComment)
             .Replace("[EntityClassName]", entityClassName)
-            .Replace("[Fiels]", string.Join("", fieldStrs))
+            .Replace("[Fields]", string.Join("", fieldStrs))
             .Replace("[Year]", Year);
             fileAllPath = Path.Combine(_filePath, entityClassName + ".cs");
             File.WriteAllText(fileAllPath, entityCode);

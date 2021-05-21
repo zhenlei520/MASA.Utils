@@ -1,7 +1,9 @@
-﻿using MASA.Utils.GenerateDBModel.Helper;
+﻿using MASA.Framework.Configuration;
+using MASA.Utils.GenerateDBModel.Helper;
 using MASA.Utils.GenerateDBModel.Model;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +27,7 @@ namespace MASA.Utils.GenerateDBModel
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             treeNodes = new List<DepartmentModel>();
+            AppSettings.Initialize();
 
             #region 先指定Template
 
@@ -43,7 +46,8 @@ namespace MASA.Utils.GenerateDBModel
             #endregion
 
             //初始化服务器地址配置
-            var serverSettings = ConfigurationManagerHelper.Configuration.GetSection(dbServerSettingRootKey).GetChildren();
+            var serverSettings = AppSettings.GetModel<ExpandoObject>(dbServerSettingRootKey)?.ToList();
+
             foreach (var item in serverSettings)
             {
                 this.serverSettingsComboBox.Items.Add(item.Key);
@@ -97,7 +101,7 @@ namespace MASA.Utils.GenerateDBModel
 
             try
             {
-                DbContext.GetDbConnection(connStr);
+                DbContext.OpenDbConnection(connStr);
                 IsConn = true;
 
                 if (isMess)
@@ -291,10 +295,10 @@ namespace MASA.Utils.GenerateDBModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void serverSettingsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ServerSettingsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var dbServerSettingKey = this.serverSettingsComboBox.SelectedItem;
-            string connstr = ConfigurationManagerHelper.GetValue($"{dbServerSettingRootKey}:{dbServerSettingKey}");
+            string connstr = AppSettings.GetModel<string>($"{dbServerSettingRootKey}:{dbServerSettingKey}");
             string[] connStrSplit = connstr.Split(';');
             this.dbText.Text = connStrSplit?.FirstOrDefault(c => c.ToUpper().Contains("DATA SOURCE"))?.Split('=')[1];
             this.txtPort.Text = connStrSplit?.FirstOrDefault(c => c.ToUpper().Contains("PORT"))?.Split('=')[1];

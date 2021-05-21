@@ -20,13 +20,13 @@ namespace [NamespaceName]
     /// </summary>
     public class [MapClassName]: EntityMappingConfiguration<[EntityClassName]>
     {
-        public override void Map(EntityTypeBuilder<[EntityClassName]> b)
+        public override void Map(EntityTypeBuilder<[EntityClassName]> builder)
         {
             // 表
-            b.ToTable("[TableName]");
+            builder.ToTable("[TableName]");
 
             // 主键
-            b.HasKey(t => new { [PRIStrs] });
+            builder.HasKey(t => new { [PRIStrs] });
         }
     }
 }

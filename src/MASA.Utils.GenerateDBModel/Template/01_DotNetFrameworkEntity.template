@@ -22,8 +22,8 @@ namespace [NamespaceName]
     /// 描 述：[TableComment]
     /// </summary>
     [TableName]
-    public partial class [EntityClassName]:EntityBase<[TKey]>
+    public partial class [EntityClassName] : EntityBase<[TKey]>
     {
-[Fiels]
+[Fields]
     }
 }
